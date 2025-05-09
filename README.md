@@ -1,19 +1,19 @@
-# Medical Chatbot with Llama 2
+# AniMed Assistant - Medical Chatbot
 
-This project implements a medical chatbot using the Llama 2 language model, Pinecone for vector storage, and LangChain for retrieval-based question answering. The chatbot is designed to provide helpful answers to medical queries based on a dataset of medical documents.
+AniMed Assistant is an interactive medical chatbot powered by Llama 2, Pinecone, and LangChain. It provides intelligent responses to medical queries based on a dataset of medical documents. The chatbot features a futuristic UI with animations and particle effects for an engaging user experience.
 
 ## Features
 
-- **PDF Document Processing**: Load and process medical PDFs to extract relevant information.
-- **Text Chunking**: Split large documents into manageable chunks for efficient embedding and retrieval.
-- **Embeddings**: Use HuggingFace embeddings for semantic similarity.
-- **Vector Storage**: Store embeddings in Pinecone for fast similarity searches.
-- **Retrieval-Based QA**: Answer user queries by retrieving the most relevant chunks and generating responses using the Llama 2 model.
-- **Interactive Chat**: Engage in a conversational interface to ask medical questions.
+- **Interactive Chat Interface**: A visually appealing chat interface with animations and glitch effects.
+- **Medical Query Processing**: Answers medical-related questions using advanced language models.
+- **PDF Document Processing**: Loads and processes medical PDFs to extract relevant information.
+- **Vector Storage**: Uses Pinecone for efficient vector storage and retrieval.
+- **Customizable Prompt**: Define custom prompts for the chatbot's responses.
 
 ## Prerequisites
 
 - Python 3.8 or higher
+- Node.js (optional, for frontend development)
 - Anaconda or virtual environment
 - Pinecone API key and environment
 - Llama 2 model (downloaded locally)
@@ -37,9 +37,9 @@ This project implements a medical chatbot using the Llama 2 language model, Pine
    pip install -r requirements.txt
    ```
 
-4. Install Pinecone:
+4. Install additional packages:
    ```bash
-   pip install pinecone-client
+   pip install -U langchain-community langchain-huggingface
    ```
 
 5. Download the Llama 2 model and place it in the `model` directory:
@@ -47,18 +47,25 @@ This project implements a medical chatbot using the Llama 2 language model, Pine
    C:\Users\DELL\medical-chatbot--Llama2\model\llama-2-7b-chat.ggmlv3.q4_0.bin
    ```
 
-## Usage
-
-1. Start the Jupyter Notebook:
-   ```bash
-   jupyter notebook
+6. Set up your `.env` file with the following variables:
+   ```plaintext
+   api_key=your_pinecone_api_key
+   index_name=medical-chatbot
    ```
 
-2. Open the `trials.ipynb` notebook and execute the cells step by step.
+## Usage
 
-3. Interact with the chatbot:
-   - Provide a query in the input prompt.
-   - Type `exit` or `quit` to end the session.
+1. Start the Flask application:
+   ```bash
+   python app.py
+   ```
+
+2. Open your browser and navigate to:
+   ```plaintext
+   http://127.0.0.1:5000/
+   ```
+
+3. Interact with the chatbot by typing your queries in the input box.
 
 ## Project Structure
 
@@ -66,8 +73,11 @@ This project implements a medical chatbot using the Llama 2 language model, Pine
 medical-chatbot--Llama2/
 ├── Data/                     # Directory for medical PDFs
 ├── model/                    # Directory for the Llama 2 model
-├── research/
-│   ├── trials.ipynb          # Main notebook for the chatbot
+├── src/
+│   ├── helper.py             # Helper functions for loading PDFs and embeddings
+├── templates/
+│   ├── chat.html             # Frontend HTML for the chatbot
+├── app.py                    # Flask application
 ├── README.md                 # Project documentation
 ├── requirements.txt          # Python dependencies
 ```
@@ -82,15 +92,22 @@ medical-chatbot--Llama2/
 ## Example Query
 
 ```plaintext
-Input Prompt (or type 'exit' to quit): What are allergies?
-Response: Allergies occur when your immune system overreacts to a foreign substance, such as dust, pollen, or pet dander.
+User: What are the symptoms of diabetes?
+Bot: The symptoms of diabetes include increased thirst, frequent urination, extreme hunger, unexplained weight loss, and fatigue.
 ```
 
 ## Troubleshooting
 
-- **Connection Issues**: Ensure your Pinecone API key and environment are correctly configured.
-- **Model Loading Errors**: Verify the Llama 2 model path and file integrity.
-- **Dependency Errors**: Ensure all required packages are installed using `pip install -r requirements.txt`.
+- **No Response from Chatbot**:
+  - Ensure the `/get` endpoint is correctly configured in `app.py`.
+  - Verify the frontend sends the query in JSON format.
+
+- **Model Loading Errors**:
+  - Check the path to the Llama 2 model in `app.py`.
+  - Ensure the model file is downloaded and placed in the correct directory.
+
+- **Dependency Errors**:
+  - Ensure all required packages are installed using `pip install -r requirements.txt`.
 
 ## License
 
